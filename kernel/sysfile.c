@@ -503,3 +503,35 @@ sys_pipe(void)
   }
   return 0;
 }
+
+/*
+uint64
+sys_write(void)
+{
+  struct file *f;
+  int n;
+  uint64 p;
+  
+  argaddr(1, &p);
+  argint(2, &n);
+  if(argfd(0, 0, &f) < 0)
+    return -1;
+
+  return filewrite(f, p, n);
+}
+*/
+
+uint64
+sys_seek(void){
+  struct file *fd;
+  int offset;
+  int whence;
+
+  if(argfd(0, 0, &fd) < 0){
+      return -1;
+  }
+  argint(1, &offset);
+  argint(2, &whence);
+  
+  return fileseek(fd, offset, whence);
+}
